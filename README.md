@@ -12,7 +12,6 @@ X | O | O
 -----------
 4 | X | 6
 -----------
-7 | 8 | X
-
+7 | X | 9
 
 Thank you for playing the game!
