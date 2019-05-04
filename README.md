@@ -8,10 +8,4 @@ git clone https://github.com/DanielMitiku/Tic-Tac-Toe.git
 
 It requires Ruby version 2 or greater
 
-X | O | O
------------
-4 | X | 6
------------
-7 | X | 9
-
 Thank you for playing the game!
