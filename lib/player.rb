@@ -1,15 +1,22 @@
 class Player
-    attr_accessor :current_player
-    def initialize(current_player)
-      @current_player = current_player if current_player == "X" || current_player == "O"
+    attr_reader :game_player
+    def initialize(game_player, game_board)
+      @game_player = game_player if game_player == "X" || game_player == "O"
+      @game_board = game_board
     end
 
-    def player_change
-        if @current_player == "X"
-            @current_player = "O"
-        elsif @current_player == "O"
-            @current_player = "X"
+    def move(index)
+        if valid_move?(index)
+            @game_board.board[index] = @game_player
         end
     end
     
+    private
+    def valid_move?(index)
+        if index.between?(0,8) && !@game_board.position_taken?(index)
+           return true
+        end
+        return false
+    end
+
 end

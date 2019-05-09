@@ -2,51 +2,33 @@ require '../lib/board.rb'
 require '../lib/game.rb'
 require '../lib/player.rb'
 
-class Main_class
-    def display_board(board)
-        puts
-        puts "#{board.board[0]} | #{board.board[1]} | #{board.board[2]}"
-        puts "-----------"
-        puts "#{board.board[3]} | #{board.board[4]} | #{board.board[5]}"
-        puts "-----------"
-        puts "#{board.board[6]} | #{board.board[7]} | #{board.board[8]}"
-        puts
+def choose_player
+    user_input = gets.strip.upcase
+    ask_time = 3
+    while user_input != "X" && user_input != "O"
+      puts "Please enter X or O"
+      user_input = gets.strip.upcase
+      ask_time -= 1
+      if ask_time < 1
+        puts "You have not chosen the correct input. Quiting...."
+        exit
+        return nil
+      end
     end
-
-    def input_to_index(user_input)
-        user_input.to_i - 1
-    end
-
-    def play(game,player,board)
-        display_board(board)
-        until game.over? 
-            puts "Now it is #{player.current_player}'s turn"
-            puts "Please enter 1-9:"
-            user_input = gets.strip
-            index = input_to_index(user_input)
-            if game.valid_move?(index)
-                game.move(index, player.current_player)
-                player.player_change
-                display_board(board)
-            else
-                puts "Please enter a valid move"
-            end
-        end 
-        if game.won?
-        display_board(board)
-        game.winner == "X" || game.winner == "O" 
-        puts "Congratulations #{game.winner}!" 
-        elsif game.draw?
-        display_board(board)
-        puts "Game Draw, Please Play Again!" 
-        end 
-    end
+    return user_input
 end
 
-board = Board.new
-player = Player.new("X")
-game = Game.new(board,player)
+puts "Hello, This is TIC TAC TOE!"
+puts "What do you prefer, Player One? X or O"
+player1 = choose_player
+player2 = player1 == "X" ? "O" : "X"
+puts "Player one will be #{player1}, and Player two will be #{player2}. Player one will start"
 
-tic_tac_toe = Main_class.new
-tic_tac_toe.play(game,player,board)
+board = Board.new
+player_one = Player.new(player1,board)
+player_two = Player.new(player2,board)
+game = Game.new(board,player_one,player_two)
+
+game.start_game
+
 

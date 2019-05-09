@@ -1,8 +1,51 @@
+module Display
+  def display_board(board)
+    puts "Choose the number shown below to fill the board"
+    puts
+    puts "#{board.board[0]} | #{board.board[1]} | #{board.board[2]}"
+    puts "-----------"
+    puts "#{board.board[3]} | #{board.board[4]} | #{board.board[5]}"
+    puts "-----------"
+    puts "#{board.board[6]} | #{board.board[7]} | #{board.board[8]}"
+    puts
+  end
+
+  def input_to_index
+    user_input = gets.strip
+    user_input.to_i - 1
+  end
+
+  def again(board)
+    puts "**************Wrong Input*****************"
+    puts "Please enter the correct number"
+    display_board(board)
+  end 
+  
+  def display_winner(winner)
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    puts "Congratulations! #{winner} has won"
+    puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+  end
+
+  def display_draw
+    puts "Game drawn. Please try again."
+  end
+
+  def display_current(current)
+    puts "#{current}'s turn"
+  end
+
+end
+
 class Game
-    def initialize(game_board, game_player)
-        @game_board = game_board
-        @game_player = game_player
+  include Display
+  attr_accessor :winner
+    def initialize(board, player_one, player_two)
+        @board = board
+        @player_one = player_one
+        @player_two = player_two
         @winner = nil
+        @current_player = player_one
         @WIN_COMBINATIONS = [ 
             [0,1,2], # top_row 
             [3,4,5], # middle_row 
@@ -15,19 +58,33 @@ class Game
             ]
     end
 
-    def move(index, player)
-        @game_board.board[index] = player
-    end
-
-    def valid_move?(index)
-        if index.between?(0,8) && !@game_board.position_taken?(index)
-           return true
+    def start_game
+      display_board(@board)
+      until over?
+        if @current_player.move(input_to_index)
+          display_board(@board)
+          change_player
+          display_current(@current_player == @player_one ? "Player One" : "Player Two")
+        else
+          again(@board)
         end
-        return false
+      end
+
+      if won?
+        display_board(@board)
+        display_winner(@winner)
+      elsif draw?
+        display_draw
+      end  
+
     end
 
+    private
+    def change_player
+      @current_player == @player_one ? @current_player = @player_two : @current_player = @player_one
+    end
     def full?
-        @game_board.board.all? {|i| i == "X" || i == "O"}
+        @board.board.all? {|i| i == "X" || i == "O"}
     end
 
     def won?
@@ -35,10 +92,10 @@ class Game
           win_index_1 = win_combination[0]
           win_index_2 = win_combination[1]
           win_index_3 = win_combination[2]
-          position_1 = @game_board.board[win_index_1] # value of game_board.board at win_index_1
-          position_2 = @game_board.board[win_index_2] # value of game_board.board at win_index_2
-          position_3 = @game_board.board[win_index_3] # value of game_board.board at win_index_3
-          if (position_1 == position_2 && position_2 == position_3 && @game_board.position_taken?(win_index_1))
+          position_1 = @board.board[win_index_1] # value of board.board at win_index_1
+          position_2 = @board.board[win_index_2] # value of board.board at win_index_2
+          position_3 = @board.board[win_index_3] # value of board.board at win_index_3
+          if (position_1 == position_2 && position_2 == position_3 && @board.position_taken?(win_index_1))
             @winner = position_1
             return true 
           end
@@ -62,12 +119,5 @@ class Game
         end
         false
     end
-    
-    def winner
-        if won?
-           return @winner
-        end
-    end
-
 
 end
