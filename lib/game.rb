@@ -42,7 +42,7 @@ class Game
 
     end
 
-    private
+    
     def change_player
       @current_player == @player_one ? @current_player = @player_two : @current_player = @player_one
     end
