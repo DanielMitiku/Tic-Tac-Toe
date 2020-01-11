@@ -1,16 +1,31 @@
 # Tic-Tac-Toe
-This is a simple Tic-Tac-Toe Game
-Contributor - Daniel Mitiku
 
-The requires Ruby version 2 or greater
+> This is a simple Tic-Tac-Toe Game made by ruby. It requires Ruby version 2 or greater. Thank you for playing the game!
 
-How to install:
+## Built With
 
-git clone https://github.com/DanielMitiku/Tic-Tac-Toe.git
+- ruby
 
-To run the game:
-ruby main.rb 
 
-main.rb is found in the bin folder.
+## Getting Started
 
-Thank you for playing the game!
+To get a local copy up and running follow these simple example steps.
+
+ - Clone this repository to your local machine using ```git clone git@github.com:DanielMitiku/Tic-Tac-Toe.git```.
+
+ - Run ```cd bin/``` to move into the bin directory.
+
+ - Run ```ruby main.rb```
+
+
+## Author
+
+👤 **Daniel Mitiku**
+
+- Github: [@danielmitiku](https://github.com/DanielMitiku)
+
+
+## 📝 License
+
+This project is [MIT](http://www.tldrlegal.com/license/mit-license) licensed.
+
